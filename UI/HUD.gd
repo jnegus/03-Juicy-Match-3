@@ -5,5 +5,5 @@ func _ready():
 	_on_score_changed()
 
 func _on_score_changed():
-	$Score.text = "Score: " + str(Global.score)
-	$Moves.text = "Moves: " + str(Global.moves)
+	$Score.text = "score: " + str(Global.score)
+	$Moves.text = "moves: " + str(Global.moves)

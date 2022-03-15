@@ -1,10 +1,42 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Grid/grid.gd" type="Script" id=1]
 [ext_resource path="res://Grid/Game.gd" type="Script" id=2]
 [ext_resource path="res://UI/HUD.gd" type="Script" id=3]
 [ext_resource path="res://UI/Level.gd" type="Script" id=4]
 [ext_resource path="res://UI/Goals.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Illustration11_7.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Title.ogg" type="AudioStream" id=7]
+[ext_resource path="res://UI/Music.gd" type="Script" id=8]
+[ext_resource path="res://Assets/gchordegc.wav" type="AudioStream" id=9]
+[ext_resource path="res://Assets/gb.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Myfont-Regular.otf" type="DynamicFontData" id=11]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 576, 1024 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 6 )
+region = Rect2( 576, 0, 576, 1024 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="DynamicFont" id=5]
+size = 20
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 20
+font_data = ExtResource( 11 )
 
 [node name="Game" type="Node2D"]
 process_priority = 1
@@ -13,13 +45,18 @@ width = 4
 height = 6
 level = 1
 
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 3 )
+speed_scale = 0.25
+playing = true
+centered = false
+
 [node name="Grid" type="Node2D" parent="."]
 script = ExtResource( 1 )
 x_start = 100
 y_start = 800
 offset = 128
 y_offset = 128
-possible_pieces = PoolStringArray( "res://Pieces/Blue.tscn", "res://Pieces/Green.tscn", "res://Pieces/Red.tscn" )
 
 [node name="HintTimer" type="Timer" parent="Grid"]
 
@@ -53,7 +90,8 @@ margin_top = 7.0
 margin_right = 255.0
 margin_bottom = 22.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Score: "
+custom_fonts/font = SubResource( 5 )
+text = "score: "
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -66,7 +104,8 @@ margin_top = 7.0
 margin_right = -5.0
 margin_bottom = 22.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Moves: "
+custom_fonts/font = SubResource( 4 )
+text = "moves: "
 align = 2
 valign = 1
 __meta__ = {
@@ -77,6 +116,9 @@ __meta__ = {
 anchor_right = 1.0
 margin_bottom = 30.0
 color = Color( 1, 1, 1, 0.376471 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Level" type="Control" parent="UI"]
 pause_mode = 2
@@ -159,8 +201,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+volume_db = -20.0
+pitch_scale = 0.76
+autoplay = true
+script = ExtResource( 8 )
+
+[node name="1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+volume_db = -10.0
+
+[node name="2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+volume_db = -20.0
+
 [connection signal="set_dimensions" from="." to="Grid" method="_on_Game_set_dimensions"]
 [connection signal="timeout" from="DestroyTimer" to="Grid" method="_on_DestroyTimer_timeout"]
 [connection signal="timeout" from="RefillTimer" to="Grid" method="_on_RefillTimer_timeout"]
 [connection signal="timeout" from="CollapseTimer" to="Grid" method="_on_CollapseTimer_timeout"]
 [connection signal="timeout" from="UI/Level/Timer" to="UI/Level" method="_on_Timer_timeout"]
+[connection signal="finished" from="Music" to="Music" method="_on_Music_finished"]

@@ -19,6 +19,9 @@ const max_z = 4095
 
 var dying = false
 
+var sound_1 = null
+var sound_2 = null
+
 func _ready():
 	default_modulate = modulate
 	target_position = position
@@ -44,6 +47,10 @@ func _physics_process(_delta):
 func move(change):
 	target_position = change
 	position = target_position
+	if sound_2 == null:
+		sound_2 = get_node_or_null("/root/Game/2")
+	if sound_2 != null:
+		sound_2.play()
 
 func dim():
 	pass

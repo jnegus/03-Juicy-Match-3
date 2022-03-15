@@ -8,18 +8,18 @@ var levels = [
 		"high score": 0,
 		"stars unlocked": 0,
 		"moves":20,
-		"goal": [{ "piece":"Red", "max":5, "count":0 }],
-		"level": "Level 1",
-		"instructions": "Match 5 red tiles"
+		"goal": [{ "piece":"black", "max":5, "count":0 }],
+		"level": "level 1",
+		"instructions": "match 5 black cats"
 	}
 	,{
 		"unlocked": true,
 		"high score": 0,
 		"stars unlocked": 0,
 		"moves":20,
-		"goal": [{ "piece":"Red", "max":5, "count":0 },{ "piece":"Blue", "max":5, "count":0 }],
-		"level": "Level 2",
-		"instructions": "Match 5 red tiles and 5 blue tiles"
+		"goal": [{ "piece":"black", "max":5, "count":0 },{ "piece":"orange", "max":5, "count":0 }],
+		"level": "level 2",
+		"instructions": "match 5 black cats and 5 orange cats"
 	}
 ]
 
@@ -46,7 +46,7 @@ func _ready():
 
 func reset():
 	score = 0
-	moves = 100
+	moves = 20
 	goal = []
 	current_level = 0
 
@@ -70,6 +70,8 @@ func change_moves(m):
 	if moves <= 0:
 		var _scene = get_tree().change_scene("res://UI/Lose.tscn") 
 	emit_signal("changed")
+
+var sound_1 = null
 
 func update_level(l):
 	if l < 0 or l >= levels.size():
@@ -96,5 +98,7 @@ func update_goals(piece):
 			check_level = false
 	if check_level:
 		change_level = true
-		
-	
+	if sound_1 == null:
+		sound_1 = get_node_or_null("/root/Game/1")
+	if sound_1 != null:
+		sound_1.play()

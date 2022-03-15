@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/gb.wav-958c917623cd3e034b84ab033f04b5b8.sample"
+
+[deps]
+
+source_file="res://Assets/gb.wav"
+dest_files=[ "res://.import/gb.wav-958c917623cd3e034b84ab033f04b5b8.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
