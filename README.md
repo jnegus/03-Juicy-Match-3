@@ -1,4 +1,5 @@
-#Project Name
+```
+##Project Name
 03-Juicy-Match-3 made on 3/15/2022
 A match-3 game with little cat pieces
 
@@ -20,3 +21,4 @@ Music was produced using https://musescore.org/en
 
 ##Created by
 Jane Negus
+```
