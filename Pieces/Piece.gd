@@ -14,6 +14,8 @@ var default_modulate = Color(1,1,1,1)
 var highlight = Color(1,0.8,0,1)
 var grid = Vector2.ZERO
 
+onready var Explosion = load("res://Congrats/Explosion.tscn")
+
 var default_z = z_index
 const max_z = 4095
 
@@ -30,18 +32,19 @@ func _physics_process(_delta):
 	if dying:
 		queue_free()
 	if selected:
+		$Selected.emitting = true
+		$Select.show()
 		if z_index == default_z:
 			z_index = max_z
 			target_position = position
 		global_position = constrain(Vector2(get_global_mouse_position().x, get_global_mouse_position().y))
-		if modulate != highlight:
-			modulate = highlight
+
 	else:
+		$Selected.emitting = false
+		$Select.hide()
 		if z_index != default_z:
 			z_index = default_z
-			position = target_position		
-		if modulate != default_modulate:
-			modulate = default_modulate
+			position = target_position
 		
 
 func move(change):
@@ -69,6 +72,12 @@ func make_color_bomb():
 	piece = "Color"
 
 func die():
+	var explosion = Explosion.instance()
+	explosion.position = position
+	get_node("/root/Game/Congrats").add_child(explosion)
+	print(explosion.position)
+	explosion.play()
+	
 	dying = true
 	Global.update_goals(piece)
 

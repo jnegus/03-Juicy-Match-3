@@ -25,7 +25,7 @@ animations = [ {
 piece = "calico"
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." index="3"]
-scale = Vector2( 2, 2 )
+scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 3 )
 frame = 1
 speed_scale = 0.08
